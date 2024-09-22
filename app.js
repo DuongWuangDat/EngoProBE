@@ -8,6 +8,7 @@ const {
   errorConverter,
   errorHandler,
 } = require("./pkg/middleware/errorHandler");
+const { authJWT, handleJWTError } = require("./pkg/middleware/authJWT");
 require("dotenv").config();
 const db_url = process.env.DB_URL;
 const port = process.env.PORT;
@@ -24,7 +25,8 @@ mongoose.connect(db_url).then(() => {
 
 app.use(cors());
 app.use(morgan("dev"));
-
+app.use(authJWT());
+app.use(handleJWTError);
 //-- Here we code --//
 app.get("/ping", (req, res) => {
   res.json({

@@ -30,5 +30,4 @@ const errorHandler = (err, req, res, next) => {
   });
 };
 
-
-module.exports= {errorHandler, errorConverter}
+module.exports = { errorHandler, errorConverter };
