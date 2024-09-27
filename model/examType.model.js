@@ -16,3 +16,9 @@ const ExamTypeSchema = mongoose.Schema(
 		timestamps: true,
 	}
 );
+
+ExamTypeSchema.plugin(toJson);
+
+const ExamType = mongoose.model("ExamType", ExamTypeSchema);
+
+module.exports = ExamType;
