@@ -9,9 +9,12 @@ const {
   errorHandler,
 } = require("./pkg/middleware/errorHandler");
 const { authJWT, handleJWTError } = require("./pkg/middleware/authJWT");
+const ChatbotRouter = require("./route/chatbot_router");
+const QuesAIRouter = require("./route/ai_question_route");
 require("dotenv").config();
 const db_url = process.env.DB_URL;
 const port = process.env.PORT;
+const api = process.env.API_URI;
 //---Connect DB ----//
 mongoose.connect(db_url).then(() => {
   console.log("Connect MongoDB successfully");
@@ -25,6 +28,7 @@ mongoose.connect(db_url).then(() => {
 
 app.use(cors());
 app.use(morgan("dev"));
+app.use(express.json());
 app.use(authJWT());
 app.use(handleJWTError);
 //-- Here we code --//
@@ -33,6 +37,9 @@ app.get("/ping", (req, res) => {
     message: "pong",
   });
 });
+
+app.use(`${api}/chatbot`, ChatbotRouter);
+app.use(`${api}/aiquestion`, QuesAIRouter);
 //-- Here we code --//
 
 app.use((req, res, next) => {
