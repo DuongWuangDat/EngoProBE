@@ -1,4 +1,5 @@
 const { default: mongoose } = require("mongoose");
+const { toJson } = require("./plugin");
 
 const ExamTypeSchema = mongoose.Schema(
 	{
