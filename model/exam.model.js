@@ -4,9 +4,9 @@ const { toJson } = require("./plugin");
 
 const ExamSchema = mongoose.Schema({
     type: {
-        type: String,
-        enum: ["IELTS", "TOEIC"],
-        default: "IELTS"
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ExamType",
+        required: true
     },
     title: {
         type: String,
