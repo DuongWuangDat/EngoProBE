@@ -12,10 +12,10 @@ const getAIQuestion = async (questions, subject) => {
     z.array(
       z.object({
         question: z.string().describe("Name of question"),
-        A: z.string().describe("Name of answer with symbol A"),
-        B: z.string().describe("Name of answer with symbol B"),
-        C: z.string().describe("Name of answer with symbol C"),
-        D: z.string().describe("Name of answer with symbol D"),
+        A: z.string().describe("Name of option with symbol A"),
+        B: z.string().describe("Name of option with symbol B"),
+        C: z.string().describe("Name of option with symbol C"),
+        D: z.string().describe("Name of option with symbol D"),
         correctAnswer: z.string().describe("Name of correct answer symbol"),
       })
     )
