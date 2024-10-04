@@ -4,7 +4,8 @@ const morgan = require("morgan");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const ApiError = require("./utils/ApiError");
-const authController = require("./controller/auth.controller");
+const authRoute = require("./routes/auth.route");
+require("dotenv").config();
 const {
 	errorConverter,
 	errorHandler,
@@ -28,6 +29,7 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(authJWT());
 app.use(handleJWTError);
+app.use(express.json());
 
 //-- Here we code --//
 app.get("/ping", (req, res) => {
@@ -35,7 +37,8 @@ app.get("/ping", (req, res) => {
 		message: "pong",
 	});
 });
-app.use("/auth", authController);
+app.use(`${process.env.API_URI}/auth`, authRoute);
+
 //-- Here we code --//
 
 app.use((req, res, next) => {

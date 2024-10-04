@@ -12,7 +12,6 @@ const UserSchema = mongooose.Schema({
     password: {
         type: String,
         required: true,
-        select: false
     },
     vocabList: [
         {

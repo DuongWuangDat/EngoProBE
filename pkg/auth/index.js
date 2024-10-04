@@ -1,5 +1,4 @@
-// import jsonwebtoken
-import { sign } from "jsonwebtoken";
+const { sign } = require("jsonwebtoken");
 require("dotenv").config();
 
 const generateAccessToken = ({ userId, userEmail }) => {
@@ -22,9 +21,9 @@ const generateRefreshToken = ({ userId, userEmail }) => {
 	);
 };
 
-const generateTokenPair = () => {
-	const accessToken = generateAccessToken();
-	const refreshToken = generateRefreshToken();
+const generateTokenPair = ({ userId, userEmail }) => {
+	const accessToken = generateAccessToken({ userId, userEmail });
+	const refreshToken = generateRefreshToken({ userId, userEmail });
 	return { accessToken, refreshToken };
 };
 
