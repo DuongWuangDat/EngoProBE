@@ -1,5 +1,5 @@
-const { getChatBotMessage } = require("../service/chatbot_service");
-const catchAsync = require("../utils/catchAsync");
+const { getChatBotMessage } = require("../service/chatbot.service");
+const { catchAsync } = require("../utils/catchAsync");
 
 const GetChatBotMessage = catchAsync(async (req, res) => {
   const humanReq = req.body.message;

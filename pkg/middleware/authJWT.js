@@ -2,13 +2,12 @@ const { expressjwt } = require("express-jwt");
 const ApiError = require("../../utils/ApiError");
 require("dotenv").config();
 const authJWT = () => {
-  const secret = process.env.SECRET_KEY;
-  const api = process.env.API_URI;
+  const secret = process.env.JWT_ACCESS_TOKEN_SECRET_KEY;
   return expressjwt({
     secret: secret,
     algorithms: ["HS256"],
   }).unless({
-    path: ["/ping", `${api}/chatbot`, `${api}/aiquestion`],
+    path: ["/ping", new RegExp(`^${process.env.API_URI}\/auth\/.*$`)],
   });
 };
 

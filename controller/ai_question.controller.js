@@ -1,5 +1,5 @@
 const { getAIQuestion } = require("../service/ai_question_service");
-const catchAsync = require("../utils/catchAsync");
+const { catchAsync } = require("../utils/catchAsync");
 
 const GetAIQuestion = catchAsync(async (req, res) => {
   const questions = req.query.questions;
