@@ -1,7 +1,7 @@
 const express = require("express");
-const { getAIQuestion } = require("../service/ai_question.service");
+const { GetAIQuestion } = require("../controller/ai_question.controller");
 const router = express.Router();
 
-router.get("", getAIQuestion);
+router.get("", GetAIQuestion);
 
 module.exports = router;

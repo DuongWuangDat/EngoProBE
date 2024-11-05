@@ -1,9 +1,9 @@
 const { ChatGoogleGenerativeAI } = require("@langchain/google-genai");
 require("dotenv").config();
-const AImodel = new ChatGoogleGenerativeAI({
+const ChatAImodel = new ChatGoogleGenerativeAI({
+  streaming: true,
   model: "gemini-pro",
-  temperature: 0.7,
-  maxOutputTokens: 2048,
+  temperature: 0.7
 });
 
-module.exports = AImodel;
+module.exports = ChatAImodel;

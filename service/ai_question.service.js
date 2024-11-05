@@ -4,8 +4,9 @@ const { StructuredOutputParser } = require("langchain/output_parsers");
 const { z } = require("zod");
 const AImodel = require("../AI-LLM/gentAImodel");
 
-const getAIQuestion = async (questions, subject) => {
-  const prompt = AIGenseratePrompt(questions, subject);
+const getAIQuestionSrv = async (questions, subject) => {
+  const prompt = AIGenseratePrompt;
+  console.log(prompt);
   const promptTemplate = ChatPromptTemplate.fromTemplate(prompt);
 
   const outputParser = StructuredOutputParser.fromZodSchema(
@@ -17,6 +18,7 @@ const getAIQuestion = async (questions, subject) => {
         C: z.string().describe("Name of option with symbol C"),
         D: z.string().describe("Name of option with symbol D"),
         correctAnswer: z.string().describe("Name of correct answer symbol"),
+        explanation: z.string().describe("Explanation of this question"),
       })
     )
   );
@@ -25,9 +27,11 @@ const getAIQuestion = async (questions, subject) => {
 
   const response = await chain.invoke({
     format_instuction: outputParser.getFormatInstructions(),
+    questions: questions,
+    subject: subject,
   });
   console.log(response);
   return response;
 };
 
-module.exports = { getAIQuestion };
+module.exports = { getAIQuestionSrv };

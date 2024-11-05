@@ -5,25 +5,27 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const ApiError = require("./utils/ApiError");
 const authRoute = require("./routes/auth.route");
+const server = require("http").createServer(app);
 require("dotenv").config();
 const {
-	errorConverter,
-	errorHandler,
+  errorConverter,
+  errorHandler,
 } = require("./pkg/middleware/errorHandler");
 const { authJWT, handleJWTError } = require("./pkg/middleware/authJWT");
 const ChatbotRouter = require("./routes/chatbot.router");
 const QuesAIRouter = require("./routes/ai_question.route");
+
 require("dotenv").config();
 const db_url = process.env.DB_URL;
 const port = process.env.PORT;
 const api = process.env.API_URI;
 //---Connect DB ----//
 mongoose.connect(db_url).then(() => {
-	console.log("Connect MongoDB successfully");
+  console.log("Connect MongoDB successfully");
 
-	app.listen(port, () => {
-		console.log("Listen at port: ", port);
-	});
+  server.listen(port, () => {
+    console.log("Listen at port: ", port);
+  });
 });
 
 //---Connect DB ----//
@@ -37,20 +39,48 @@ app.use(express.json());
 
 //-- Here we code --//
 app.get("/ping", (req, res) => {
-	res.json({
-		message: "pong",
-	});
+  res.json({
+    message: "pong",
+  });
 });
 app.use(`${process.env.API_URI}/auth`, authRoute);
-
 
 app.use(`${api}/chatbot`, ChatbotRouter);
 app.use(`${api}/aiquestion`, QuesAIRouter);
 //-- Here we code --//
 
 app.use((req, res, next) => {
-	next(new ApiError(404, "Url not found!"));
+  next(new ApiError(404, "Url not found!"));
 });
 
 app.use(errorConverter);
 app.use(errorHandler);
+
+//--Socket--//
+const { Server } = require("socket.io");
+const { conversationChain, memory } = require("./AI-LLM/chatModel/chatModel");
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log(socket.id);
+
+  socket.on("chat_request", async (data) => {
+    const humanMsg = data.message;
+    console.log("Start chat");
+    const response = await conversationChain.invoke({
+      input: humanMsg,
+    });
+    console.log(response);
+    io.to(socket.id).emit("chat_response", response.response);
+
+    console.log("End chat");
+  });
+  socket.on("disconnect", () => {
+    console.log(socket.id + "disconnect");
+    memory.clear();
+  });
+});

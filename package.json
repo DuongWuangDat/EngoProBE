@@ -5,6 +5,7 @@
   "dependencies": {
     "@langchain/core": "^0.3.3",
     "@langchain/google-genai": "^0.1.0",
+    "@langchain/mongodb": "^0.1.0",
     "@types/node": "^22.5.4",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
@@ -13,7 +14,9 @@
     "express-jwt": "^8.4.1",
     "http-status": "^1.7.4",
     "jsonwebtoken": "^9.0.2",
+    "kafkajs": "^2.2.4",
     "langchain": "^0.3.2",
+    "mongodb": "^6.10.0",
     "mongoose": "^8.6.1",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.4",
