@@ -1,11 +1,14 @@
 const { catchAsync } = require("../utils/catchAsync");
 const { login, register, refresh } = require("../service/auth.service");
 const { extractTokenFromHeader } = require("../pkg/helper");
+const multer = require("multer");
+
+const upload = multer({ storage: multer.memoryStorage() });
 
 const loginController = catchAsync(async (req, res) => {
 	const { email, password } = req.body;
 	const data = await login(email, password);
-	return res.json(data);
+	return res.status(200).json(data);
 });
 
 const logoutController = catchAsync(async (req, res) => {
@@ -14,8 +17,9 @@ const logoutController = catchAsync(async (req, res) => {
 
 const registerController = catchAsync(async (req, res) => {
 	const { email, password, username } = req.body;
-	const data = await register(email, password, username);
-	return res.json(data);
+	const avatar = req.file;
+	const data = await register(email, password, username, avatar);
+	return res.status(201).json(data);
 });
 
 const refreshTokenController = catchAsync(async (req, res) => {
@@ -24,7 +28,13 @@ const refreshTokenController = catchAsync(async (req, res) => {
 		throw new ApiError(401, "Unauthorized");
 	}
 	const accessToken = await refresh(refreshToken);
-	return res.json({ accessToken });
+	return res.status(200).json({ accessToken });
 });
 
-module.exports = { loginController, logoutController, registerController, refreshTokenController };
+module.exports = {
+	loginController,
+	logoutController,
+	registerController,
+	refreshTokenController,
+	upload,
+};

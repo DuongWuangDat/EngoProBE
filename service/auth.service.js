@@ -5,13 +5,17 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { generateTokenPair, generateAccessToken } = require("../pkg/auth");
+const { uploadToImageKit, validateEmail } = require("../pkg/helper");
+
 
 const login = async (email, password) => {
 	if (!email || !password) {
 		throw new ApiError(400, "Email and password are required");
 	}
+	if (!validateEmail(email)) {
+		throw new ApiError(400, "Invalid email");
+	}
 	const user = await User.findOne({ email });
-	console.log(user);
 	if (!user) {
 		throw new ApiError(400, "Email not found");
 	}
@@ -26,20 +30,30 @@ const login = async (email, password) => {
 	};
 };
 
-const register = async (email, password, username) => {
+const register = async (email, password, username, avatar) => {
 	if (!email || !password || !username) {
 		throw new ApiError(400, "Email, password and username are required");
+	}
+	if (!validateEmail(email)) {
+		throw new ApiError(400, "Invalid email");
 	}
 	const user = await User.findOne({ email });
 	if (user) {
 		throw new ApiError(400, "Email already exists");
 	}
+	let avatarUrl = null;
+	if (avatar) {
+		const uploadAvatar = await uploadToImageKit(avatar.buffer, avatar.originalname);
+		avatarUrl = uploadAvatar.url;
+	}
 	const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-	const newUser = await User.create({
+	const updateUserData = {
 		email,
 		password: hashedPassword,
 		username,
-	});
+		...(avatarUrl && { avatar: avatarUrl }),
+	};
+	const newUser = await User.create(updateUserData);
 	const { password: _, ...userWithoutPassword } = newUser.toObject();
 	return {
 		...generateTokenPair({ userId: newUser._id, userEmail: newUser.email }),
