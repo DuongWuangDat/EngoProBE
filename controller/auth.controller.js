@@ -1,5 +1,5 @@
 const { catchAsync } = require("../utils/catchAsync");
-const { login, register, refresh } = require("../service/auth.service");
+const { login, register, refresh, googleCallback } = require("../service/auth.service");
 const { extractTokenFromHeader } = require("../pkg/helper");
 const multer = require("multer");
 
@@ -31,10 +31,17 @@ const refreshTokenController = catchAsync(async (req, res) => {
 	return res.status(200).json({ accessToken });
 });
 
+const googleCallbackController = catchAsync(async (req, res) => {
+	const { accessToken, idToken, provider, profile } = req.body;
+	const data = await googleCallback(accessToken, idToken, provider, profile);
+	return res.status(200).json(data);
+});
+
 module.exports = {
 	loginController,
 	logoutController,
 	registerController,
 	refreshTokenController,
+	googleCallbackController,
 	upload,
 };

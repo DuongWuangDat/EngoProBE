@@ -1,0 +1,29 @@
+[
+    {
+        "type": "File",
+        "name": "d:\\Study Documents\\Ky5\\do-an-1\\do-an-1-be\\controller\\auth.controller.js",
+        "parent_id": null,
+        "fsPath": "d:\\Study Documents\\Ky5\\do-an-1\\do-an-1-be\\controller\\auth.controller.js",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "7H8UYBKSwNGXzbAE"
+    },
+    {
+        "type": "File",
+        "name": "d:\\Study Documents\\Ky5\\do-an-1\\do-an-1-be\\routes\\auth.route.js",
+        "parent_id": null,
+        "fsPath": "d:\\Study Documents\\Ky5\\do-an-1\\do-an-1-be\\routes\\auth.route.js",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "FTeNMH4RxbU7sY5D"
+    },
+    {
+        "type": "File",
+        "name": "d:\\Study Documents\\Ky5\\do-an-1\\do-an-1-be\\service\\auth.service.js",
+        "parent_id": null,
+        "fsPath": "d:\\Study Documents\\Ky5\\do-an-1\\do-an-1-be\\service\\auth.service.js",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "Z5fiesDOzXW4lBb8"
+    }
+]

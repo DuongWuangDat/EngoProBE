@@ -71,4 +71,23 @@ const refresh = async (refreshToken) => {
 		userEmail: decoded.userEmail,
 	});
 };
-module.exports = { login, register, refresh };
+
+const googleCallback = async (accessToken, idToken, provider, profile) => {
+	const existingUser = await User.findOne({ email: profile.email });
+	let user = null;
+	if (existingUser) {
+		user = existingUser;
+	} else {
+		user = await User.create({
+			email: profile.email,
+			username: profile.name,
+			avatar: profile.picture,
+			password: Math.random().toString(36).substring(2, 15),
+		});
+	}
+	return {
+		...generateTokenPair({ userId: user._id, userEmail: user.email }),
+		user: user,
+	};
+};
+module.exports = { login, register, refresh, googleCallback };
