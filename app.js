@@ -14,7 +14,7 @@ const {
 const { authJWT, handleJWTError } = require("./pkg/middleware/authJWT");
 const ChatbotRouter = require("./routes/chatbot.router");
 const QuesAIRouter = require("./routes/ai_question.route");
-
+const SearchRouter = require("./routes/search.route");
 require("dotenv").config();
 const db_url = process.env.DB_URL;
 const port = process.env.PORT;
@@ -47,6 +47,7 @@ app.use(`${process.env.API_URI}/auth`, authRoute);
 
 app.use(`${api}/chatbot`, ChatbotRouter);
 app.use(`${api}/aiquestion`, QuesAIRouter);
+app.use(`${api}/search`, SearchRouter);
 //-- Here we code --//
 
 app.use((req, res, next) => {
