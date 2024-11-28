@@ -10,8 +10,6 @@ const authJWT = () => {
     path: [
       "/ping",
       new RegExp(`^${process.env.API_URI}\/auth\/.*$`),
-      "/api/v1/chatbot",
-      "/api/v1/aiquestion",
       "/api/v1/search",
     ],
   });
