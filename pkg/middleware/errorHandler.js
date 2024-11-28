@@ -2,14 +2,15 @@ const httpStatus = require("http-status");
 const ApiError = require("../../utils/ApiError");
 
 const errorConverter = (err, req, res, next) => {
-	let error = err;
-	if (!(error instanceof ApiError)) {
-		const statusCode = error.statusCode
-			? httpStatus.BAD_REQUEST
-			: httpStatus.INTERNAL_SERVER_ERROR;
-		const msg = httpStatus[statusCode];
-		error = new ApiError(statusCode, msg);
-	}
+
+  let error = err;
+  if (!(error instanceof ApiError)) {
+    const statusCode = error.statusCode
+      ? httpStatus.BAD_REQUEST
+      : httpStatus.INTERNAL_SERVER_ERROR;
+    const msg = httpStatus[statusCode];
+    error = new ApiError(statusCode, msg);
+  }
 
 	next(error);
 };
