@@ -5,6 +5,8 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const ApiError = require("./utils/ApiError");
 const authRoute = require("./routes/auth.route");
+const swagger = require("./swagger");
+const validateDto = require("./pkg/middleware/validate-dto");
 require("dotenv").config();
 const {
 	errorConverter,
@@ -30,7 +32,6 @@ app.use(morgan("dev"));
 app.use(authJWT());
 app.use(handleJWTError);
 app.use(express.json());
-
 //-- Here we code --//
 app.get("/ping", (req, res) => {
 	res.json({
@@ -38,6 +39,7 @@ app.get("/ping", (req, res) => {
 	});
 });
 app.use(`${process.env.API_URI}/auth`, authRoute);
+app.use("/api-docs", swagger.serve, swagger.setup);
 
 //-- Here we code --//
 

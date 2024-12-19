@@ -7,7 +7,11 @@ const authJWT = () => {
 		secret: secret,
 		algorithms: ["HS256"],
 	}).unless({
-		path: ["/ping", new RegExp(`^${process.env.API_URI}\/auth\/.*$`)],
+		path: [
+			"/ping",
+			/^\/api-docs\/?.*$/,
+			new RegExp(`^${process.env.API_URI}\/auth\/.*$`),
+		],
 	});
 };
 

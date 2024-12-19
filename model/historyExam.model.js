@@ -29,6 +29,10 @@ const historyExamSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    duration: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true,
@@ -36,6 +40,7 @@ const historyExamSchema = mongoose.Schema(
 );
 
 historyExamSchema.plugin(toJson);
+historyExamSchema.index({ user: 1, exam: 1, createdAt: -1 });
 
 const HistoryExam = mongoose.model("historyExam", historyExamSchema);
 

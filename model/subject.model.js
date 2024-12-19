@@ -1,7 +1,7 @@
 
-const mongooose = require("mongoose")
+const mongoose = require("mongoose")
 const { toJson } = require("./plugin")
-const SubjectSchema = mongooose.Schema({
+const SubjectSchema = mongoose.Schema({
     subjectName: {
         type: String,
         required: true
@@ -12,6 +12,6 @@ const SubjectSchema = mongooose.Schema({
 
 SubjectSchema.plugin(toJson)
 
-const Subject = mongooose.model("subject", SubjectSchema)
+const Subject = mongoose.model("subject", SubjectSchema)
 
 module.exports= Subject

@@ -1,45 +1,31 @@
-const { default: mongoose } = require("mongoose");
-const { toJson } = require("./plugin");
+const mongoose = require('mongoose');
+const { toJson } = require('./plugin');
 
-const ExamSchema = mongoose.Schema(
-	{
-		type: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "ExamType",
-			required: true,
-		},
-		title: {
-			type: String,
-			required: true,
-		},
-		maxScore: {
-			type: Number,
-			required: true,
-		},
-		questionCount: {
-			type: Number,
-			required: true,
-		},
-		time: {
-			type: Number,
-			required: true,
-		},
-		partCount: {
-			type: Number,
-			required: true,
-		},
-		tags: {
-			type: [String],
-			required: true,
-		},
-	},
-	{
-		timestamps: true,
-	}
-);
+const optionSchema = new mongoose.Schema({
+  option: { type: String, required: true }, // A, B, C, or D
+  text: { type: String, required: true }
+});
 
-ExamSchema.plugin(toJson);
+const questionSchema = new mongoose.Schema({
+  questionNumber: { type: Number, required: true },
+  imageUrl: { type: String },
+  audioUrl: { type: String },
+  questionText: { type: String },
+  options: [optionSchema],
+  correctAnswer: { type: String, required: true }
+});
 
-const Exam = mongoose.model("Exam", ExamSchema);
+const partSchema = new mongoose.Schema({
+  partNumber: { type: Number, required: true },
+  instructions: { type: String, required: true },
+  questions: [questionSchema]
+});
 
-module.exports = Exam;
+const toeicTestSchema = new mongoose.Schema({
+  testTitle: { type: String, required: true },
+  parts: [partSchema]
+});
+
+toeicTestSchema.plugin(toJson);
+
+module.exports = mongoose.model('TOEICTest', toeicTestSchema);

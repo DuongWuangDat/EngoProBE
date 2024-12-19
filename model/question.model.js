@@ -1,24 +1,28 @@
-const mongooose = require("mongoose")
-const { toJson } = require("./plugin")
+const mongoose = require("mongoose");
+const { toJson } = require("./plugin");
 
-const QuestionSchema= mongooose.Schema({
-    question: {
-        required: true,
-        type: String
-    },
-    answers: [
-        {
-            required: true,
-            type: mongooose.Schema.Types.ObjectId,
-            ref: "Answer"
-        }
-    ]
-}, {
-    timestamps: true
-})
+const QuestionSchema = mongoose.Schema(
+	{
+		question: {
+			required: true,
+			type: String,
+		},
+		answers: [
+			{
+				required: true,
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Answer",
+			},
+		],
+	},
+	{
+		timestamps: true,
+	}
+);
 
-QuestionSchema.plugin(toJson)
+QuestionSchema.index({ difficulty: 1 });
+QuestionSchema.plugin(toJson);
 
-const Question = mongooose.model("question", QuestionSchema)
+const Question = mongoose.model("question", QuestionSchema);
 
-module.exports = Question
+module.exports = Question;
