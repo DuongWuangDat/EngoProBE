@@ -1,10 +1,11 @@
-const mongooose = require("mongoose");
+const mongoose = require("mongoose");
 const { toJson } = require("./plugin");
-const UserSchema = mongooose.Schema(
+const UserSchema = mongoose.Schema(
 	{
 		username: {
 			required: true,
 			type: String,
+			unique: true,
 		},
 		email: {
 			type: String,
@@ -21,7 +22,7 @@ const UserSchema = mongooose.Schema(
 		},
 		vocabList: [
 			{
-				type: mongooose.Schema.Types.ObjectId,
+				type: mongoose.Schema.Types.ObjectId,
 				ref: "Vocab",
 			},
 		],
@@ -33,6 +34,8 @@ const UserSchema = mongooose.Schema(
 
 UserSchema.plugin(toJson);
 
-const User = mongooose.model("user", UserSchema);
+UserSchema.index({ email: 1 }, { unique: true });
+UserSchema.index({ username: 1 }, { unique: true });
+const User = mongoose.model("user", UserSchema);
 
 module.exports = User;

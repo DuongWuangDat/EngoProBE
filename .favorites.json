@@ -1,29 +1,29 @@
 [
     {
-        "type": "File",
-        "name": "d:\\Study Documents\\Ky5\\do-an-1\\do-an-1-be\\controller\\auth.controller.js",
+        "type": "Directory",
+        "name": "d:\\Study Documents\\Ky5\\do-an-1\\do-an-1-be\\service",
         "parent_id": null,
-        "fsPath": "d:\\Study Documents\\Ky5\\do-an-1\\do-an-1-be\\controller\\auth.controller.js",
+        "fsPath": "d:\\Study Documents\\Ky5\\do-an-1\\do-an-1-be\\service",
         "workspaceRoot": null,
         "workspacePath": null,
-        "id": "7H8UYBKSwNGXzbAE"
+        "id": "KRrJXCaAegzl6xGs"
     },
     {
-        "type": "File",
-        "name": "d:\\Study Documents\\Ky5\\do-an-1\\do-an-1-be\\routes\\auth.route.js",
+        "type": "Directory",
+        "name": "d:\\Study Documents\\Ky5\\do-an-1\\do-an-1-be\\controller",
         "parent_id": null,
-        "fsPath": "d:\\Study Documents\\Ky5\\do-an-1\\do-an-1-be\\routes\\auth.route.js",
+        "fsPath": "d:\\Study Documents\\Ky5\\do-an-1\\do-an-1-be\\controller",
         "workspaceRoot": null,
         "workspacePath": null,
-        "id": "FTeNMH4RxbU7sY5D"
+        "id": "lov9ChxYaRfD8rzQ"
     },
     {
-        "type": "File",
-        "name": "d:\\Study Documents\\Ky5\\do-an-1\\do-an-1-be\\service\\auth.service.js",
+        "type": "Directory",
+        "name": "d:\\Study Documents\\Ky5\\do-an-1\\do-an-1-be\\model",
         "parent_id": null,
-        "fsPath": "d:\\Study Documents\\Ky5\\do-an-1\\do-an-1-be\\service\\auth.service.js",
+        "fsPath": "d:\\Study Documents\\Ky5\\do-an-1\\do-an-1-be\\model",
         "workspaceRoot": null,
         "workspacePath": null,
-        "id": "Z5fiesDOzXW4lBb8"
+        "id": "7s0YfZdn329N1eKJ"
     }
 ]
