@@ -24,7 +24,7 @@ const VocabSchema = mongoose.Schema(
 		subject: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Subject",
-			required: true,
+			default: null,
 		},
 	},
 	{
@@ -34,6 +34,6 @@ const VocabSchema = mongoose.Schema(
 
 VocabSchema.plugin(toJson)
 
-const Vocab = mongoose.model("vocab", VocabSchema)
+const Vocab = mongoose.model("Vocab", VocabSchema)
 
 module.exports= Vocab

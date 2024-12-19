@@ -1,28 +1,36 @@
 const mongoose = require("mongoose");
 const { toJson } = require("./plugin");
 
-const QuestionSchema = mongoose.Schema(
+const questionSchema = new mongoose.Schema(
 	{
-		question: {
+		exam: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Exam",
 			required: true,
-			type: String,
 		},
-		answers: [
-			{
-				required: true,
-				type: mongoose.Schema.Types.ObjectId,
-				ref: "Answer",
-			},
-		],
+		questionNumber: {
+			type: Number,
+			required: true,
+		},
+		correctAnswer: {
+			type: String,
+			required: true,
+		},
+		partNumber: {
+			type: Number,
+			required: true,
+			min: 1,
+			max: 7
+		}
 	},
 	{
 		timestamps: true,
 	}
 );
 
-QuestionSchema.index({ difficulty: 1 });
-QuestionSchema.plugin(toJson);
+// Create compound index for efficient querying
+questionSchema.index({ exam: 1, questionNumber: 1, partNumber: 1 });
 
-const Question = mongoose.model("question", QuestionSchema);
+questionSchema.plugin(toJson);
 
-module.exports = Question;
+module.exports = mongoose.model("Question", questionSchema);
