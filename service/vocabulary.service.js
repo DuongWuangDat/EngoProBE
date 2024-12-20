@@ -39,7 +39,7 @@ const createVocabulary = async (
 			definition,
 			wordType,
 			example: example || [],
-			subject: subject || null,
+			subject: null,
 		});
 
 		// Add the vocabulary to user's vocabList

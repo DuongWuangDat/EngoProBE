@@ -228,4 +228,5 @@ module.exports = {
 	submitExam,
 	getExamResult,
 	getAllExamResult,
+	uploadToeicTest,
 };
