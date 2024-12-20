@@ -53,7 +53,10 @@ const submitExam = catchAsync(async (req, res) => {
 	for (const [partNumber, answers] of Object.entries(answeredQuestions)) {
 		const part = exam.parts[parseInt(partNumber) - 1];
 		if (!part) {
-			throw new ApiError(httpStatus.NOT_FOUND, `Part ${partNumber} not found`);
+			throw new ApiError(
+				httpStatus.NOT_FOUND,
+				`Part ${partNumber} not found`
+			);
 		}
 		for (const answer of answers) {
 			let question;
@@ -134,8 +137,8 @@ const submitExam = catchAsync(async (req, res) => {
 		correctAnswers: totalCorrect,
 		duration: duration,
 	});
-	console.log(historyExam)
-	
+	console.log(historyExam);
+
 	res.status(httpStatus.OK).json({
 		success: true,
 		data: {
@@ -149,8 +152,6 @@ const submitExam = catchAsync(async (req, res) => {
 			duration: duration,
 		},
 	});
-
-	res.status(httpStatus.OK).send("ok");
 });
 
 const getAllExamResult = catchAsync(async (req, res) => {
@@ -210,6 +211,14 @@ const getExamResult = catchAsync(async (req, res) => {
 	});
 });
 
+const uploadToeicTest = catchAsync(async (req, res) => {
+	const exam = await examService.uploadToeicTest(req.body);
+	res.status(httpStatus.CREATED).json({
+		success: true,
+		data: exam,
+	});
+});
+
 module.exports = {
 	createExam,
 	getExams,
@@ -219,4 +228,5 @@ module.exports = {
 	submitExam,
 	getExamResult,
 	getAllExamResult,
+	uploadToeicTest,
 };

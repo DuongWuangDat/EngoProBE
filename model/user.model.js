@@ -38,4 +38,14 @@ UserSchema.index({ email: 1 }, { unique: true });
 UserSchema.index({ username: 1 }, { unique: true });
 const User = mongoose.model("user", UserSchema);
 
+User.isUsernameTaken = async function (username, userId) {
+	const user = await this.findOne({ username, _id: { $ne: userId } });
+	return user ? true : false;
+};
+
+User.isEmailTaken = async function (email, userId) {
+	const user = await this.findOne({ email, _id: { $ne: userId } });
+	return user ? true : false;
+};
+
 module.exports = User;
