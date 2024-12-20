@@ -18,6 +18,7 @@ const createExam = async (examBody) => {
  * @returns {Promise<Exam>}
  */
 const uploadToeicTest = async (testData) => {
+	console.log(testData);
 	try {
 		// Find or create TOEIC exam type
 		let toeicType = await ExamType.findOne({ examType: "TOEIC" });
@@ -62,7 +63,8 @@ const uploadToeicTest = async (testData) => {
 			testId,
 			testTitle: testData.testTitle,
 			parts: testData.parts,
-			examType: toeicType._id
+			examType: toeicType._id,
+			audioUrl: testData.audioUrl,
 		});
 
 		return exam;

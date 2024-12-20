@@ -1,0 +1,28 @@
+1|Starting verification...
+2|Connected to MongoDB
+3|
+4|Exam Details:
+5|Test ID: TOEIC-ETS2023-1
+6|Title: TOEIC Practice Test 1
+7|Book: ETS 2023
+8|Type: TOEIC
+9|
+10|Part Details:
+11|
+12|Part 1:
+13|Instructions: For each question...
+14|Total Questions: 6
+15|Expected Questions: 6
+16|Status: ✅ OK
+17|
+18|Part 3:
+19|Instructions: For each question...
+20|Total Questions: 39
+21|Expected Questions: 39
+22|Status: ✅ OK
+23|Clusters: 13
+24|  - Cluster cluster1: 3 questions
+25|  - Cluster cluster2: 3 questions
+26|  ...
+27|
+28|Disconnected from MongoDB
