@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { toJson } = require("./plugin");
+const { type } = require("os");
 const UserSchema = mongoose.Schema(
   {
     username: {
@@ -14,6 +15,10 @@ const UserSchema = mongoose.Schema(
     password: {
       type: String,
       required: true,
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false,
     },
     avatar: {
       type: String,

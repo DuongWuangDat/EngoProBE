@@ -16,9 +16,9 @@ const logoutController = catchAsync(async (req, res) => {
 });
 
 const registerController = catchAsync(async (req, res) => {
-	const { email, password, username } = req.body;
+	const { email, password, username, isAdmin } = req.body;
 	const avatar = req.file;
-	const data = await register(email, password, username, avatar);
+	const data = await register(email, password, username, avatar, isAdmin);
 	return res.status(201).json(data);
 });
 
