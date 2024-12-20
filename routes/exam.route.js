@@ -5,11 +5,18 @@ const examValidation = require("../validations/exam.validation");
 
 const router = express.Router();
 
+// Admin routes
+router.post(
+	"/upload-toeic",
+	validate(examValidation.uploadToeicTest),
+	examController.uploadToeicTest
+);
+
+// Regular routes
 router
 	.route("/")
 	.post(validate(examValidation.createExam), examController.createExam)
 	.get(validate(examValidation.getExams), examController.getExams);
-//
 
 router.post(
 	"/submit",

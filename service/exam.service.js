@@ -1,4 +1,5 @@
 const Exam = require("../model/exam.model");
+const ExamType = require("../model/examType.model");
 const httpStatus = require("http-status");
 const ApiError = require("../utils/ApiError");
 
@@ -9,6 +10,65 @@ const ApiError = require("../utils/ApiError");
  */
 const createExam = async (examBody) => {
 	return Exam.create(examBody);
+};
+
+/**
+ * Upload a new TOEIC test
+ * @param {Object} testData
+ * @returns {Promise<Exam>}
+ */
+const uploadToeicTest = async (testData) => {
+	try {
+		// Find or create TOEIC exam type
+		let toeicType = await ExamType.findOne({ examType: "TOEIC" });
+		if (!toeicType) {
+			toeicType = await ExamType.create({
+				book: testData.book,
+				examType: "TOEIC",
+			});
+		}
+
+		// Validate part structure
+		const requiredPartQuestions = {
+			1: 6,  // Part 1: 6 questions
+			2: 25, // Part 2: 25 questions
+			3: 39, // Part 3: 39 questions
+			4: 30, // Part 4: 30 questions
+			5: 30, // Part 5: 30 questions
+			6: 16, // Part 6: 16 questions
+			7: 54  // Part 7: 54 questions
+		};
+
+		// Validate each part's question count
+		for (const part of testData.parts) {
+			const totalQuestions = part.partNumber <= 2 || part.partNumber === 5 
+				? part.questions.length 
+				: part.questions.reduce((sum, cluster) => sum + cluster.questions.length, 0);
+
+			if (totalQuestions !== requiredPartQuestions[part.partNumber]) {
+				throw new ApiError(
+					httpStatus.BAD_REQUEST,
+					`Part ${part.partNumber} should have exactly ${requiredPartQuestions[part.partNumber]} questions, but got ${totalQuestions}`
+				);
+			}
+		}
+
+		// Create unique testId
+		const testCount = await Exam.countDocuments({ "examType": toeicType._id });
+		const testId = `TOEIC-${testData.book}-${testCount + 1}`;
+
+		// Create the exam
+		const exam = await Exam.create({
+			testId,
+			testTitle: testData.testTitle,
+			parts: testData.parts,
+			examType: toeicType._id
+		});
+
+		return exam;
+	} catch (error) {
+		throw new ApiError(error.statusCode || httpStatus.INTERNAL_SERVER_ERROR, error.message);
+	}
 };
 
 /**
@@ -73,6 +133,7 @@ const deleteExamById = async (examId) => {
 
 module.exports = {
 	createExam,
+	uploadToeicTest,
 	getExamById,
 	queryExams,
 	updateExamById,
