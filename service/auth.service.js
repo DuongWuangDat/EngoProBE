@@ -73,6 +73,7 @@ const refresh = async (refreshToken) => {
 };
 
 const googleCallback = async (accessToken, idToken, provider, profile) => {
+	console.log(profile);
 	const existingUser = await User.findOne({ email: profile.email });
 	let user = null;
 	if (existingUser) {
@@ -83,6 +84,7 @@ const googleCallback = async (accessToken, idToken, provider, profile) => {
 			username: profile.name,
 			avatar: profile.picture,
 			password: Math.random().toString(36).substring(2, 15),
+			avatar: profile.picture,
 		});
 	}
 	return {

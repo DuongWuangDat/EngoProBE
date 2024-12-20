@@ -19,6 +19,7 @@ const ChatbotRouter = require("./routes/chatbot.router");
 const QuesAIRouter = require("./routes/ai_question.route");
 const SearchRouter = require("./routes/search.route");
 const vocabularyRoute = require("./routes/vocabulary.route");
+const userRoute = require("./routes/user.route");
 require("dotenv").config();
 const db_url = process.env.DB_URL;
 const port = process.env.PORT;
@@ -50,6 +51,7 @@ app.use(`${process.env.API_URI}/auth`, authRoute);
 app.use("/api-docs", swagger.serve, swagger.setup);
 app.use(`${process.env.API_URI}/exam`, examRoute);
 app.use(`${process.env.API_URI}/vocabulary`, vocabularyRoute);
+app.use(`${process.env.API_URI}/user`, userRoute);
 
 app.use(`${api}/chatbot`, ChatbotRouter);
 app.use(`${api}/aiquestion`, QuesAIRouter);

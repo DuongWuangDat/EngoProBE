@@ -125,6 +125,65 @@ const getExamResult = {
 	}),
 };
 
+const uploadToeicTest = {
+	body: Joi.object().keys({
+		testTitle: Joi.string().required(),
+		book: Joi.string().required(),
+		parts: Joi.array().items(
+			Joi.object({
+				partNumber: Joi.number().integer().min(1).max(7).required(),
+				instructions: Joi.string().required(),
+				questions: Joi.alternatives().conditional('partNumber', {
+					switch: [
+						{
+							is: Joi.number().valid(3, 4, 6, 7),
+							then: Joi.array().items(
+								Joi.object({
+									clusterId: Joi.string().required(),
+									imageUrl: Joi.string(),
+									questions: Joi.array().items(
+										Joi.object({
+											questionNumber: Joi.number().required(),
+											imageUrl: Joi.string(),
+											questionText: Joi.string(),
+											options: Joi.array().items(
+												Joi.object({
+													option: Joi.string().valid('A', 'B', 'C', 'D').required(),
+													text: Joi.string().required()
+												})
+											).min(4).max(4).required(),
+											correctAnswer: Joi.string().valid('A', 'B', 'C', 'D').required(),
+											passageType: Joi.string(),
+											paragraphs: Joi.number()
+										})
+									).min(1).required()
+								})
+							).min(1).required()
+						},
+						{
+							is: Joi.number().valid(1, 2, 5),
+							then: Joi.array().items(
+								Joi.object({
+									questionNumber: Joi.number().required(),
+									imageUrl: Joi.string(),
+									questionText: Joi.string(),
+									options: Joi.array().items(
+										Joi.object({
+											option: Joi.string().valid('A', 'B', 'C', 'D').required(),
+											text: Joi.string().required()
+										})
+									).min(3).max(4).required(),
+									correctAnswer: Joi.string().valid('A', 'B', 'C', 'D').required()
+								})
+							).min(1).required()
+						}
+					]
+				}).required()
+			})
+		).min(7).max(7).required()
+	})
+};
+
 module.exports = {
 	createExam,
 	getExams,
@@ -134,4 +193,5 @@ module.exports = {
 	submitExam,
 	getExamResult,
 	getAllExamResult,
+	uploadToeicTest,
 };
