@@ -9,7 +9,7 @@ const validateDto = require("./pkg/middleware/validate-dto");
 const server = require("http").createServer(app);
 require("dotenv").config();
 const {
-	errorConverter,
+  errorConverter,
   errorHandler,
 } = require("./pkg/middleware/errorHandler");
 const { authJWT, handleJWTError } = require("./pkg/middleware/authJWT");
@@ -67,29 +67,29 @@ app.use(errorHandler);
 
 //--Socket--//
 const { Server } = require("socket.io");
-// const { conversationChain, memory } = require("./AI-LLM/chatModel/chatModel");
+const { conversationChain, memory } = require("./AI-LLM/chatModel/chatModel");
 const io = new Server(server, {
   cors: {
     origin: "*",
   },
 });
 
-// io.on("connection", (socket) => {
-//   console.log(socket.id);
+io.on("connection", (socket) => {
+  console.log(socket.id);
 
-//   socket.on("chat_request", async (data) => {
-//     const humanMsg = data.message;
-//     console.log("Start chat");
-//     const response = await conversationChain.invoke({
-//       input: humanMsg,
-//     });
-//     console.log(response);
-//     io.to(socket.id).emit("chat_response", response.response);
+  socket.on("chat_request", async (data) => {
+    const humanMsg = data.message;
+    console.log("Start chat");
+    const response = await conversationChain.invoke({
+      input: humanMsg,
+    });
+    console.log(response);
+    io.to(socket.id).emit("chat_response", response.response);
 
-//     console.log("End chat");
-//   });
-//   socket.on("disconnect", () => {
-//     console.log(socket.id + "disconnect");
-//     memory.clear();
-//   });
-// });
+    console.log("End chat");
+  });
+  socket.on("disconnect", () => {
+    console.log(socket.id + "disconnect");
+    memory.clear();
+  });
+});
