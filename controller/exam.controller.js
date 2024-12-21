@@ -142,7 +142,6 @@ const submitExam = catchAsync(async (req, res) => {
 		correctAnswers: totalCorrect,
 		duration: duration,
 	});
-	console.log(historyExam);
 
 	res.status(httpStatus.OK).json({
 		success: true,

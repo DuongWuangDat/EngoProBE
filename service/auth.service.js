@@ -74,7 +74,6 @@ const refresh = async (refreshToken) => {
 };
 
 const googleCallback = async (accessToken, idToken, provider, profile) => {
-	console.log(profile);
 	const existingUser = await User.findOne({ email: profile.email });
 	let user = null;
 	if (existingUser) {

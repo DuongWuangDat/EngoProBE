@@ -1,4 +1,4 @@
-const {catchAsync} = require("../utils/catchAsync");
+const { catchAsync } = require("../utils/catchAsync");
 const userService = require("../service/user.service");
 
 const getUser = catchAsync(async (req, res) => {
@@ -24,6 +24,7 @@ const getUser = catchAsync(async (req, res) => {
  */
 
 const updateUser = catchAsync(async (req, res) => {
+
 	// Get file from multer
 	const avatarFile = req.file;
 	const updateBody = req.body;
@@ -35,12 +36,13 @@ const updateUser = catchAsync(async (req, res) => {
 		avatarBuffer = avatarFile.buffer;
 		avatarFileName = avatarFile.originalname;
 	}
-	const user = await userService.updateUserById(
+
+	const { password, ...user } = (await userService.updateUserById(
 		req.params.userId,
 		updateBody,
 		avatarBuffer,
 		avatarFileName
-	);
+	)).toObject();
 
 	res.send(user);
 });
