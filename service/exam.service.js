@@ -12,13 +12,16 @@ const createExam = async (examBody) => {
 	return Exam.create(examBody);
 };
 
+const getAllExam = async () => {
+	return Exam.find({}).populate("examType").select("-parts");
+};
+
 /**
  * Upload a new TOEIC test
  * @param {Object} testData
  * @returns {Promise<Exam>}
  */
 const uploadToeicTest = async (testData) => {
-	console.log(testData);
 	try {
 		// Find or create TOEIC exam type
 		let toeicType = await ExamType.findOne({ examType: "TOEIC" });
@@ -140,4 +143,5 @@ module.exports = {
 	queryExams,
 	updateExamById,
 	deleteExamById,
+	getAllExam,
 };

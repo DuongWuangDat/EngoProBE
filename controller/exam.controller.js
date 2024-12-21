@@ -21,6 +21,11 @@ const getExams = catchAsync(async (req, res) => {
 	res.send(result);
 });
 
+const getAllExam = catchAsync(async (req, res) => {
+	const result = await examService.getAllExam();
+	res.send(result);
+});
+
 const getExam = catchAsync(async (req, res) => {
 	const exam = await examService.getExamById(req.params.examId);
 	if (!exam) {
@@ -137,7 +142,6 @@ const submitExam = catchAsync(async (req, res) => {
 		correctAnswers: totalCorrect,
 		duration: duration,
 	});
-	console.log(historyExam);
 
 	res.status(httpStatus.OK).json({
 		success: true,
@@ -229,4 +233,5 @@ module.exports = {
 	getExamResult,
 	getAllExamResult,
 	uploadToeicTest,
+	getAllExam,
 };

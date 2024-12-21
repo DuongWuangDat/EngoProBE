@@ -16,8 +16,9 @@ const updateUser = {
 			email: Joi.string().email(),
 			username: Joi.string().min(3).max(30),
 			password: Joi.string().min(8).max(30),
-			// avatar will be handled by multer
 		})
+		.min(1)
+		.unknown(true),
 };
 
 module.exports = {

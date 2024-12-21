@@ -18,6 +18,8 @@ router
 	.post(validate(examValidation.createExam), examController.createExam)
 	.get(validate(examValidation.getExams), examController.getExams);
 
+router.get("/all", examController.getAllExam);
+
 router.post(
 	"/submit",
 	validate(examValidation.submitExam),
