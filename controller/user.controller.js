@@ -7,7 +7,7 @@ const getUser = catchAsync(async (req, res) => {
 });
 
 /**
- * 1|// POST /users/:userId
+ * 1|// PATCH /users/:userId
  * 2|// Content-Type: multipart/form-data
  * 3|{
  * 4|  "username": "newUsername",
@@ -15,7 +15,7 @@ const getUser = catchAsync(async (req, res) => {
  * 6|  "avatar": <file>  // Image file
  * 7|} 
  * 
- * 1|// POST /users/:userId
+ * 1|// PATCH /users/:userId
 2|// Content-Type: application/json
  * 3|{
  * 4|  "username": "newUsername",

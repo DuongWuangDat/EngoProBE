@@ -12,6 +12,10 @@ const createExam = async (examBody) => {
 	return Exam.create(examBody);
 };
 
+const getAllExam = async () => {
+	return Exam.find({}).populate("examType").select("-parts");
+};
+
 /**
  * Upload a new TOEIC test
  * @param {Object} testData
@@ -140,4 +144,5 @@ module.exports = {
 	queryExams,
 	updateExamById,
 	deleteExamById,
+	getAllExam,
 };

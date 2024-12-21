@@ -21,6 +21,11 @@ const getExams = catchAsync(async (req, res) => {
 	res.send(result);
 });
 
+const getAllExam = catchAsync(async (req, res) => {
+	const result = await examService.getAllExam();
+	res.send(result);
+});
+
 const getExam = catchAsync(async (req, res) => {
 	const exam = await examService.getExamById(req.params.examId);
 	if (!exam) {
@@ -229,4 +234,5 @@ module.exports = {
 	getExamResult,
 	getAllExamResult,
 	uploadToeicTest,
+	getAllExam,
 };
